@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  adonis_app:
+    container_name: adonis_app
+    restart: always
+    build:
+      context: .
+    ports:
+      - ${PORT}:${PORT}
+      - "9229:9229"
+    env_file:
+      - .env
+    volumes:
+      - ./:/home/node/app
+    command: node ace serve --watch
+  postgres:
+    container_name: postgres
+    image: postgres:13
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+volumes:
+    postgres_data:
