@@ -1,7 +1,8 @@
-<script setup lang="ts">
-
+<script lang="ts" setup>
+import { Toaster } from '~/components/ui/toast'
 </script>
 
 <template>
-  <h1 class="text-red-300">hello world</h1>
+  <h1>Home</h1>
+  <Toaster />
 </template>
