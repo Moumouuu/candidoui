@@ -8,6 +8,7 @@ import * as z from 'zod'
 import { AuthApi } from '~/api/auth_api'
 import { Toaster } from '~/components/ui/toast'
 import { Toast } from '~/models/toast'
+import { HttpCode } from '~/lib/http_code'
 
 const formSchema = toTypedSchema(
   z.object({
@@ -21,7 +22,10 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit(async (values) => {
   try {
-    await AuthApi.login(values)
+    const response = await AuthApi.login(values)
+    if (response.status === HttpCode.OK) {
+      window.location.href = '/'
+    }
   } catch (error) {
     Toast.error({
       title: 'Une erreur est survenue',

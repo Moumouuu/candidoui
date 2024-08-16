@@ -21,7 +21,8 @@
     "#middleware/*": "./src/infrastructure/middleware/*.js",
     "#tests/*": "./tests/*.js",
     "#start/*": "./start/*.js",
-    "#config/*": "./config/*.js"
+    "#config/*": "./config/*.js",
+    "#providers/*": "./providers/*.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.7.0",

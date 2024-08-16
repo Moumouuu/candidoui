@@ -8,11 +8,12 @@ import * as z from 'zod'
 import { AuthApi } from '~/api/auth_api'
 import { Toaster } from '~/components/ui/toast'
 import { Toast } from '~/models/toast'
+import { HttpCode } from '~/lib/http_code'
 
 const formSchema = toTypedSchema(
   z.object({
-    firstName: z.string().min(2).max(50),
-    lastName: z.string().min(2).max(50),
+    first_name: z.string().min(2),
+    last_name: z.string().min(2),
     email: z.string().email(),
     password: z.string().min(8),
   })
@@ -23,7 +24,10 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit(async (values) => {
   try {
-    await AuthApi.register(values)
+    const response = await AuthApi.register(values)
+    if (response.status === HttpCode.CREATED) {
+      window.location.href = '/'
+    }
   } catch (error) {
     Toast.error({
       title: 'Une erreur est survenue',
@@ -46,7 +50,7 @@ const onSubmit = form.handleSubmit(async (values) => {
         </div>
         <form @submit="onSubmit">
           <div class="flex gap-4">
-            <FormField v-slot="{ componentField }" name="firstName">
+            <FormField v-slot="{ componentField }" name="first_name">
               <FormItem>
                 <FormLabel>Prénom</FormLabel>
                 <FormControl>
@@ -55,7 +59,7 @@ const onSubmit = form.handleSubmit(async (values) => {
                 <FormMessage />
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="lastName">
+            <FormField v-slot="{ componentField }" name="last_name">
               <FormItem>
                 <FormLabel>Nom</FormLabel>
                 <FormControl>
@@ -84,7 +88,7 @@ const onSubmit = form.handleSubmit(async (values) => {
               <FormMessage />
             </FormItem>
           </FormField>
-          <Button class="w-full mt-4" type="submit"> Se connecter </Button>
+          <Button class="w-full mt-4" type="submit"> Créer un compte </Button>
         </form>
         <div class="mt-4 text-center text-sm">
           Vous avez un compte ?
