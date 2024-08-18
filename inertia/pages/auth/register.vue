@@ -9,6 +9,7 @@ import { AuthApi } from '~/api/auth_api'
 import { Toaster } from '~/components/ui/toast'
 import { Toast } from '~/models/toast'
 import { HttpCode } from '~/lib/http_code'
+import { Head } from '@inertiajs/vue3'
 
 const formSchema = toTypedSchema(
   z.object({
@@ -38,6 +39,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 </script>
 
 <template>
+  <Head title="Créer un compte" />
   <Toaster />
   <div class="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
     <div class="flex items-center justify-center py-12">
