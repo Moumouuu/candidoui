@@ -1,6 +1,8 @@
 import type { ApplicationService } from '@adonisjs/core/types'
 import UserRepository from '#domain/contracts/repositories/user_repository'
-import PGUserRepository from '#infrastructure/postgres/repositories/PG_user_repository'
+import LucidUserRepository from '#infrastructure/repositories/lucid_user_repository'
+import CandidateRepository from '#domain/contracts/repositories/candidate_repository'
+import LucidCandidateRepository from '#infrastructure/repositories/lucid_candidate_repository'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -14,7 +16,8 @@ export default class AppProvider {
    * The container bindings have booted
    */
   async boot() {
-    this.app.container.bind(UserRepository, () => new PGUserRepository())
+    this.app.container.bind(UserRepository, () => new LucidUserRepository())
+    this.app.container.bind(CandidateRepository, () => new LucidCandidateRepository())
   }
 
   /**
