@@ -12,4 +12,8 @@ export default class UserApi {
       },
     })
   }
+
+  static async delete() {
+    return axios.delete(`/profile`)
+  }
 }

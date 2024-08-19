@@ -5,7 +5,7 @@ import CandidateRepository from '#domain/contracts/repositories/candidate_reposi
 import { inject } from '@adonisjs/core'
 
 @inject()
-export default class UpdateProfileUsecase {
+export default class UpdateUserProfileUsecase {
   constructor(
     private userRepository: UserRepository,
     private candidateRepository: CandidateRepository

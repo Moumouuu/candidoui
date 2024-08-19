@@ -1,17 +1,19 @@
 import { HttpContext } from '@adonisjs/core/http'
 import { inject } from '@adonisjs/core'
-import UpdateProfileUsecase from '#domain/usecases/users/update_profile_usecase'
 import UserRepository from '#domain/contracts/repositories/user_repository'
-import ShowProfilePresenterUsecase from '#domain/usecases/users/show_profile_presenter_usecase'
 import UploadCvUsecase from '#domain/usecases/candidates/upload_cv_usecase'
+import UpdateUserProfileUsecase from '#domain/usecases/users/update_user_usecase'
+import ShowUserProfilePresenterUsecase from '#domain/usecases/users/show_user_presenter_usecase'
+import DeleteUserUsecase from '#domain/usecases/users/delete_user_usecase'
 
 @inject()
 export default class UserController {
   constructor(
-    private updateProfileUsecase: UpdateProfileUsecase,
-    private showProfilePresenterUsecase: ShowProfilePresenterUsecase,
+    private updateProfileUsecase: UpdateUserProfileUsecase,
+    private showProfilePresenterUsecase: ShowUserProfilePresenterUsecase,
     private uploadCvUsecase: UploadCvUsecase,
-    private userRepository: UserRepository
+    private userRepository: UserRepository,
+    private deleteUserUsecase: DeleteUserUsecase
   ) {}
 
   async showProfile({ inertia, auth }: HttpContext) {
@@ -50,6 +52,19 @@ export default class UserController {
       const fileUrl = await this.uploadCvUsecase.execute(user.id, cvFile)
       return response.ok({
         fileUrl,
+      })
+    } catch (error) {
+      return response.status(400).send(error.message)
+    }
+  }
+
+  async deleteProfile({ response, auth }: HttpContext) {
+    const user = auth.getUserOrFail()
+
+    try {
+      await this.deleteUserUsecase.execute(user)
+      return response.ok({
+        message: 'Your account has been deleted successfully',
       })
     } catch (error) {
       return response.status(400).send(error.message)

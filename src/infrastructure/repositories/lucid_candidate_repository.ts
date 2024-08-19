@@ -2,7 +2,7 @@ import CandidateRepository from '#domain/contracts/repositories/candidate_reposi
 import Candidate from '#models/candidate'
 
 export default class LucidCandidateRepository implements CandidateRepository {
-  save(candidate: Candidate): Promise<any> {
+  save(candidate: Candidate): Promise<Candidate> {
     return candidate.save()
   }
 

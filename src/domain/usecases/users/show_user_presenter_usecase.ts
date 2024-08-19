@@ -1,6 +1,6 @@
 import User from '#models/user'
 
-export default class ShowProfilePresenterUsecase {
+export default class ShowUserProfilePresenterUsecase {
   // I just moved this method to the use case, but we could also use an
   // interface to invert the dependency, allowing us to switch to another
   // presenter like XML in the future.

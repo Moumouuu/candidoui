@@ -32,7 +32,7 @@ const onSubmit = form.handleSubmit(async (values) => {
   } catch (error) {
     Toast.error({
       title: 'Une erreur est survenue',
-      description: 'Email ou mot de passe incorrect',
+      description: 'Une erreur serveur est survenue',
     })
   }
 })

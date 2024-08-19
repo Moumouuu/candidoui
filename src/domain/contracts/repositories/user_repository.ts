@@ -5,4 +5,5 @@ export default abstract class UserRepository {
   abstract create(payload: UserRegisterDTO): Promise<User>
   abstract save(user: User): Promise<User>
   abstract load(relation: string, user: User): Promise<void>
+  abstract delete(user: User): Promise<void>
 }

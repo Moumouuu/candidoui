@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps, ref } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   uploadText: {

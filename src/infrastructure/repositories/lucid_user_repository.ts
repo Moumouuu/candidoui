@@ -19,4 +19,8 @@ export default class LucidUserRepository implements UserRepository {
   async load(relation: string, user: User): Promise<void> {
     await user.load(relation)
   }
+
+  delete(user: User): Promise<void> {
+    return user.delete()
+  }
 }

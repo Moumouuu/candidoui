@@ -29,6 +29,7 @@ router
   .group(() => {
     router.get('/profile', [UserController, 'showProfile'])
     router.patch('/profile', [UserController, 'updateProfile'])
+    router.delete('/profile', [UserController, 'deleteProfile'])
     router.patch('/profile/cv', [UserController, 'updateProfileCV'])
   })
   .use(middleware.auth())

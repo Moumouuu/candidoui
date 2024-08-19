@@ -16,6 +16,7 @@ import { InferPageProps } from '@adonisjs/inertia/types'
 import UserController from '#controllers/user_controller'
 import { HttpCode } from '~/lib/http_code'
 import UserApi from '~/api/user_api'
+import ConfirmationModal from '~/components/confirmationModal.vue'
 
 const props = defineProps<{
   user: InferPageProps<UserController, 'showProfile'>['user']
@@ -43,6 +44,24 @@ const form = useForm({
 })
 
 const isEditing = ref(false)
+const showModal = ref(false)
+
+const handleSubmit = async () => {
+  try {
+    const response = await UserApi.delete()
+    if (response.status === HttpCode.OK) {
+      Toast.success({
+        title: 'Compte supprimé',
+        description: 'Votre compte a été supprimé avec succès',
+      })
+    }
+  } catch (error) {
+    Toast.error({
+      title: 'Une erreur est survenue',
+      description: 'Impossible de mettre à jour le profil',
+    })
+  }
+}
 
 function toggleEditMode() {
   isEditing.value = !isEditing.value
@@ -78,7 +97,6 @@ async function uploadCv(cv: FormData) {
   try {
     const response = await UserApi.updateCV(cv)
     if (response.status === HttpCode.OK) {
-
       Toast.success({
         title: 'CV mis à jour',
         description: 'Votre CV a été mis à jour avec succès',
@@ -169,8 +187,8 @@ async function uploadCv(cv: FormData) {
         </div>
 
         <!-- Action Buttons -->
-        <div class="mt-6 w-full">
-          <Button v-if="!isEditing" type="button" @click="toggleEditMode">
+        <div class="mt-6 w-full flex flex-col lg:flex-row items-center justify-between">
+          <Button v-if="!isEditing" class="w-full lg:w-auto" type="button" @click="toggleEditMode">
             <Edit3 class="w-4 h-4 mr-2" />
             <span>Modifier le profil</span>
           </Button>
@@ -178,6 +196,20 @@ async function uploadCv(cv: FormData) {
             <Check class="w-4 h-4 mr-2" />
             <span>Enregistrer</span>
           </Button>
+
+          <ConfirmationModal
+            v-if="!isEditing"
+            v-model="showModal"
+            :onCancel="handleCancel"
+            :onSubmit="handleSubmit"
+            buttonVariant="destructive"
+            cancelLabel="Annuler"
+            confirmLabel="Supprimer mon compte"
+            description="Êtes-vous sûr de vouloir effectuer cette action ?"
+            title="Voulez-vous supprimer votre compte ?"
+            triggerButtonClass="w-full lg:w-auto mt-3 lg:mt-0"
+            triggerLabel="Supprimer mon compte"
+          />
         </div>
       </form>
     </div>
