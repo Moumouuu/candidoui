@@ -63,6 +63,24 @@ const handleSubmit = async () => {
   }
 }
 
+// todo : make routes controllers and create deleteCV function in UserApi
+const handleCancel = () => {
+  try {
+    const response = await UserApi.deleteCv()
+    if (response.status === HttpCode.OK) {
+      Toast.success({
+        title: 'CV supprimé',
+        description: 'Votre CV a été supprimé avec succès',
+      })
+    }
+  } catch (error) {
+    Toast.error({
+      title: 'Une erreur est survenue',
+      description: 'Impossible de mettre à jour le profil',
+    })
+  }
+}
+
 function toggleEditMode() {
   isEditing.value = !isEditing.value
 }
@@ -93,6 +111,7 @@ function userFullName() {
 function downloadCv() {
   window.open(`/uploads/${props.user.cv}`)
 }
+
 async function uploadCv(cv: FormData) {
   try {
     const response = await UserApi.updateCV(cv)
