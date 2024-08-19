@@ -3,6 +3,8 @@ import UserRepository from '#domain/contracts/repositories/user_repository'
 import LucidUserRepository from '#infrastructure/repositories/lucid_user_repository'
 import CandidateRepository from '#domain/contracts/repositories/candidate_repository'
 import LucidCandidateRepository from '#infrastructure/repositories/lucid_candidate_repository'
+import LocalUploadFileRepository from '#infrastructure/repositories/local_upload_file_repository'
+import UploadFileRepository from '#domain/contracts/repositories/upload_file_repository'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -18,6 +20,7 @@ export default class AppProvider {
   async boot() {
     this.app.container.bind(UserRepository, () => new LucidUserRepository())
     this.app.container.bind(CandidateRepository, () => new LucidCandidateRepository())
+    this.app.container.bind(UploadFileRepository, () => new LocalUploadFileRepository())
   }
 
   /**

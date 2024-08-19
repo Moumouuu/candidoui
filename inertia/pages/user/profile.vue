@@ -78,12 +78,13 @@ async function uploadCv(cv: FormData) {
   try {
     const response = await UserApi.updateCV(cv)
     if (response.status === HttpCode.OK) {
+
       Toast.success({
         title: 'CV mis à jour',
         description: 'Votre CV a été mis à jour avec succès',
       })
       // Update user cv url to show the new one
-      props.user.cv = response.data.cvUrl.toString()
+      props.user.cv = response.data.fileUrl.toString()
     }
   } catch (error) {
     Toast.error({
