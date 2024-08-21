@@ -14,6 +14,7 @@ export default class AppProvider {
    */
   register() {}
 
+
   /**
    * The container bindings have booted
    */
