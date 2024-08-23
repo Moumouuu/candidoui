@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string('first_name').notNullable()
       table.string('last_name').notNullable()
       table.string('email', 254).notNullable().unique()
-      table.enum('role', ['candidate', 'recruiter']).notNullable().defaultTo('candidate')
+      table.enum('role', ['0', '1']).notNullable().defaultTo(0) // 0 is candidate
       table.string('password').notNullable()
 
       table.timestamp('created_at').notNullable()

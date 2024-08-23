@@ -3,7 +3,6 @@ import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
-import { UserRole } from '#domain/enum/user_role'
 import type { HasOne } from '@adonisjs/lucid/types/relations'
 import Candidate from '#models/candidate'
 import Recruiter from '#models/recruiter'
@@ -24,7 +23,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare last_name: string
 
   @column()
-  declare role: UserRole
+  declare role: number
 
   @column()
   declare email: string

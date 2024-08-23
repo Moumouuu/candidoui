@@ -12,6 +12,9 @@ export default class Recruiter extends BaseModel {
   declare sector_of_activity: string | null
 
   @column()
+  declare user_id: number
+
+  @column()
   declare location: string
 
   @column()
