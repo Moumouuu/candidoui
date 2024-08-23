@@ -29,7 +29,7 @@ export default class RecruiterController {
     })
   }
 
-  async create({ request, auth, response, inertia }: HttpContext) {
+  async create({ request, auth, response }: HttpContext) {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { company_name, location, sector_of_activity } = request.only([
       'company_name',
