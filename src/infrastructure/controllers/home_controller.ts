@@ -1,7 +1,11 @@
 import { HttpContext } from '@adonisjs/core/http'
-import User from '#models/user'
+import { inject } from '@adonisjs/core'
+import ShowUserHomePresenterUsecase from '#domain/usecases/users/show_user_home_presenter'
 
+@inject()
 export default class HomeController {
+  constructor(private showUserHomePresenterUsecase: ShowUserHomePresenterUsecase) {}
+
   async index({ inertia, auth }: HttpContext) {
     let user = null
     try {
@@ -12,16 +16,7 @@ export default class HomeController {
     }
 
     return inertia.render('home', {
-      user: this.showUserHomePresenter(user),
+      user: this.showUserHomePresenterUsecase.execute(user),
     })
-  }
-
-  showUserHomePresenter(user: User) {
-    return {
-      id: user.id,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-    }
   }
 }
