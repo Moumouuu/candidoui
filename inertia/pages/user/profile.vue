@@ -11,12 +11,13 @@ import * as z from 'zod'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '~/components/ui/form'
 import { Toast } from '~/models/toast'
 import { ref } from 'vue'
-import FileDropzone from '~/components/fileDropzone.vue'
+import FileDropzone from '~/components/common/fileDropzone.vue'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import UserController from '#controllers/user_controller'
 import { HttpCode } from '~/lib/http_code'
 import UserApi from '~/api/user_api'
-import ConfirmationModal from '~/components/confirmationModal.vue'
+import ConfirmationModal from '~/components/common/confirmationModal.vue'
+import Header from '~/components/layout/header.vue'
 
 const props = defineProps<{
   user: InferPageProps<UserController, 'showProfile'>['user']
@@ -109,7 +110,7 @@ function userFullName() {
 }
 
 function downloadCv() {
-  window.open(`/uploads/${props.user.cv}`)
+  window.open(`${props.user.cv}`)
 }
 
 async function uploadCv(cv: FormData) {
@@ -135,6 +136,7 @@ async function uploadCv(cv: FormData) {
 <template>
   <Head title="Profil utilisateur" />
   <Toaster />
+  <Header :user="props.user" />
 
   <div
     class="flex flex-col lg:flex-row items-center lg:items-start bg-gray-100 min-h-screen p-6 lg:p-12"

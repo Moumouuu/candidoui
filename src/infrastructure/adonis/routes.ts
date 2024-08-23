@@ -20,13 +20,13 @@ const HomeController = () => import('#controllers/home_controller')
 router.get('/', [HomeController, 'index']).as('home')
 router.post('/login', [AuthController, 'login'])
 router.post('register', [AuthController, 'register'])
-router.delete('/logout', [AuthController, 'logout'])
 router.get('/login', [AuthController, 'showLogin'])
 router.get('/register', [AuthController, 'showRegister'])
 
 // authenticated routes
 router
   .group(() => {
+    router.get('/logout', [AuthController, 'logout'])
     router.get('/profile', [UserController, 'showProfile'])
     router.patch('/profile', [UserController, 'updateProfile'])
     router.delete('/profile', [UserController, 'deleteProfile'])
