@@ -5,6 +5,7 @@ export default class UserApi {
   static async updateProfile(data: UserProfileUpdateDTO) {
     return axios.patch('/profile', data)
   }
+
   static async updateCV(cv: FormData) {
     return axios.patch('/profile/cv', cv, {
       headers: {
@@ -15,5 +16,9 @@ export default class UserApi {
 
   static async delete() {
     return axios.delete(`/profile`)
+  }
+
+  static async deleteCv() {
+    return axios.delete(`/profile/cv`)
   }
 }

@@ -5,6 +5,7 @@ import UploadCvUsecase from '#domain/usecases/candidates/upload_cv_usecase'
 import UpdateUserProfileUsecase from '#domain/usecases/users/update_user_usecase'
 import ShowUserProfilePresenterUsecase from '#domain/usecases/users/show_user_presenter_usecase'
 import DeleteUserUsecase from '#domain/usecases/users/delete_user_usecase'
+import DeleteCvUsecase from '#domain/usecases/candidates/delete_cv_usecase'
 
 @inject()
 export default class UserController {
@@ -13,7 +14,8 @@ export default class UserController {
     private showProfilePresenterUsecase: ShowUserProfilePresenterUsecase,
     private uploadCvUsecase: UploadCvUsecase,
     private userRepository: UserRepository,
-    private deleteUserUsecase: DeleteUserUsecase
+    private deleteUserUsecase: DeleteUserUsecase,
+    private deleteCvUsecase: DeleteCvUsecase
   ) {}
 
   async showProfile({ inertia, auth }: HttpContext) {
@@ -65,6 +67,19 @@ export default class UserController {
       await this.deleteUserUsecase.execute(user)
       return response.ok({
         message: 'Your account has been deleted successfully',
+      })
+    } catch (error) {
+      return response.status(400).send(error.message)
+    }
+  }
+
+  async deleteProfileCV({ response, auth }: HttpContext) {
+    const user = auth.getUserOrFail()
+
+    try {
+      await this.deleteCvUsecase.execute(user)
+      return response.ok({
+        message: 'Your CV has been deleted successfully',
       })
     } catch (error) {
       return response.status(400).send(error.message)

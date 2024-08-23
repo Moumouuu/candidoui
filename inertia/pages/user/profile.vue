@@ -63,8 +63,7 @@ const handleSubmit = async () => {
   }
 }
 
-// todo : make routes controllers and create deleteCV function in UserApi
-const handleCancel = () => {
+const fileRemoved = async () => {
   try {
     const response = await UserApi.deleteCv()
     if (response.status === HttpCode.OK) {
@@ -72,6 +71,7 @@ const handleCancel = () => {
         title: 'CV supprimé',
         description: 'Votre CV a été supprimé avec succès',
       })
+      props.user.cv = null
     }
   } catch (error) {
     Toast.error({
@@ -219,7 +219,6 @@ async function uploadCv(cv: FormData) {
           <ConfirmationModal
             v-if="!isEditing"
             v-model="showModal"
-            :onCancel="handleCancel"
             :onSubmit="handleSubmit"
             buttonVariant="destructive"
             cancelLabel="Annuler"
@@ -245,7 +244,7 @@ async function uploadCv(cv: FormData) {
         file-types-text="PDF jusqu'à 3MB"
         or-drop-text="ou glisser-déposer"
         upload-text="Choisir un fichier"
-        @fileRemoved="user.cv = null"
+        @fileRemoved="fileRemoved"
         @fileSelected="uploadCv"
       />
     </div>

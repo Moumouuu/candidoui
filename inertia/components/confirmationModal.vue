@@ -27,7 +27,7 @@ const props = defineProps<{
   confirmLabel: string
   cancelLabel: string
   onSubmit: () => void
-  onCancel: () => void
+  onCancel?: () => void
   triggerButtonClass?: string
   buttonVariant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
 }>()
@@ -73,15 +73,12 @@ const DialogOrDrawerDescription = computed(() =>
         <component :is="DialogOrDrawerDescription">{{ description }}</component>
       </component>
       <div class="flex justify-end space-x-2 pt-4">
-        <Button class="w-full lg:w-auto" variant="outline" @click="handleCancel">{{
-          cancelLabel
-        }}</Button>
-        <Button
-          :variant="buttonVariant || 'default'"
-          class="w-full lg:w-auto"
-          @click="handleSubmit"
-          >{{ confirmLabel }}</Button
-        >
+        <Button class="w-full lg:w-auto" variant="outline" @click="handleCancel"
+          >{{ cancelLabel }}
+        </Button>
+        <Button :variant="buttonVariant || 'default'" class="w-full lg:w-auto" @click="handleSubmit"
+          >{{ confirmLabel }}
+        </Button>
       </div>
     </component>
   </component>
