@@ -19,7 +19,7 @@ services:
     image: postgres:13
     restart: always
     ports:
-      - "5432:5432"
+      - "9620:5432"
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -29,4 +29,4 @@ services:
 
 
 volumes:
-    postgres_data:
+  postgres_data:
